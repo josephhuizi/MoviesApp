@@ -1,23 +1,46 @@
-import {View, Text, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, Image, Alert} from 'react-native';
 import { useState } from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
-import { Link } from 'expo-router';
+import {Link, router} from 'expo-router';
 
 import { images } from '../../constants';
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { createUser } from '../../lib/appwrite'
+import {useGlobalContext} from "../../context/GlobalProvider";
 const SignUp = () => {
     const [form, setForm] = useState({
         username: '',
         email: '',
         password: '',
     });
-    const [isSubmitting, setSubmitting] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const {setUser, setIsLogged } = useGlobalContext();
 
-    const submit = () => {
-        createUser()
+    const submit = async () => {
+        if(!form.username || !form.email || !form.password) {
+            Alert.alert('Error', 'Please fill in all the fields')
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const result = await createUser(
+                form.email,
+                form.password,
+                form.username
+            );
+            setUser(result);
+            setIsLogged(true);
+
+            router.replace('/home');
+        } catch (error) {
+            Alert.alert('Error', error.message)
+        } finally {
+            setIsSubmitting(false);
+        }
     }
+
     return (
         <SafeAreaView className="bg-primary h-full">
             <ScrollView>
@@ -63,7 +86,7 @@ const SignUp = () => {
                             Have an account already?
                         </Text>
                         <Link href="/sign-in" className="text-base font-psemibold text-secondary-200">
-                            Sign In
+                            Sign Up
                         </Link>
                     </View>
                 </View>
