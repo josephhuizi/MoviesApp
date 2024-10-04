@@ -30,12 +30,12 @@ const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avat
                 </View>
             </View>
             {play ? (
-                <Text>Playing</Text>
+                <Text className="text-white">Playing</Text>
             ) : (
                 <TouchableOpacity
                     className="w-full h-60 rounded-xl mt-3 relative justify-center items-center"
                     activeOpacity={0.7}
-                    onPress={() => setPlay(!play)}
+                    onPress={() => setPlay(true)}
                 >
                     <Image
                         source={{ uri: thumbnail }}

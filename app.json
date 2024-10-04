@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.omnylab.moviesapp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -27,6 +28,12 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fc93f8f1-2570-43e7-a691-b5e4fc6e892f"
+      }
+    },
+    "owner": "joseph.huizi"
   }
 }
